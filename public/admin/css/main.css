@@ -1,0 +1,50 @@
+body {
+    margin: 0;
+    background: orange;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 100vh;
+}
+
+html, body {
+    height: 100%;
+}
+
+h1 { color: orange; }
+
+main {
+    flex: 1;
+}
+
+footer {
+    background: #222;
+    color: #fff;
+    padding: 12px 0 6px 0;
+    text-align: center;
+}
+
+footer h3 {
+    color: orange;
+    margin: 10px 0 6px 0;
+}
+
+.page {
+    background: #fff;
+    border-radius: 1em;
+    margin: 1em;
+    min-height: 500px;
+    padding: 1em;
+}
+
+.icon-home {
+    color: #666;
+    font-size: 60px;
+    margin: 20px;
+}
+
+.btn-home-admin {
+    font-size: 25px;
+}
+
