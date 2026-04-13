@@ -45,22 +45,23 @@ class LoginController extends Controller
     {
         $cart = \Session::get('cart');
 
-        if ($cart && count($cart) > 0) {
-            $order = Orders::firstOrCreate(
-                ['user_id' => auth()->id(), 'status' => 'cart'],
-                ['subtotal' => 0, 'shipping' => 0]
-            );
+        $order = Orders::firstOrCreate(
+            ['user_id' => auth()->id(), 'status' => 'cart'],
+            ['subtotal' => 0, 'shipping' => 0]
+        );
 
+        // Borramos primero los productos antiguos del carrito en BD
+        $order->order_items()->delete();
+
+        // Si todavía hay productos en sesión, los volvemos a guardar
+        if ($cart && count($cart) > 0) {
             foreach ($cart as $item) {
-                $order->order_items()->updateOrCreate(
-                    ['product_id' => $item->id],
-                    [
-                        'price' => $item->price,
-                        'quantity' => $item->quantity
-                    ]
-                );
+                $order->order_items()->create([
+                    'product_id' => $item->id,
+                    'price' => $item->price,
+                    'quantity' => $item->quantity
+                ]);
             }
-            \Session::forget('cart');
         }
 
         $this->guard()->logout();

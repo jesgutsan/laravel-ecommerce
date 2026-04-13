@@ -179,14 +179,30 @@ class PaypalController extends Controller
             $subtotal += $item->price * $item->quantity;
         }
 
-        // Per guardar la informació de les comandes cal crear el registre principal
-        $order = Orders::create([
-            'subtotal' => $subtotal,
-            'shipping' => 100, // Despeses d'enviament fixes
-            'user_id' => \Auth::user()->id
-        ]);
+        // Busquem el cistella actual de l'usuari
+        $order = Orders::where('user_id', \Auth::user()->id)
+            ->where('status', 'cart')
+            ->first();
 
-        // Per cada producte de la cistella guardem una línia de detall
+            // Si no existeix, el creem
+        if (!$order) {
+            $order = Orders::create([
+                'subtotal' => $subtotal,
+                'shipping' => 100,
+                'user_id' => \Auth::user()->id,
+                'status' => 'paid'
+            ]);
+        } else {
+            // Convertim el carret en una compra real
+            $order->subtotal = $subtotal;
+            $order->shipping = 100;
+            $order->status = 'paid';
+            $order->save();
+        }
+        // Eliminem línies anteriors per seguretat
+        $order->order_items()->delete();
+
+        // Guardem els articles definitius de la compra
         foreach($cart as $item){
             $this->saveOrderItem($item, $order->id);
         }
