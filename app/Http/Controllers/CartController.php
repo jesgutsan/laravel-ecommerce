@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product; // Corregit per a versions modernes de Laravel
+use App\Models\Product;
 
 class CartController extends Controller
 {
-    //Constructor per a inicialitzar l'array de la cistella en la sessió 
+    //Constructor per a inicialitzar l'array de la cistella en la sessió
     public function __construct() {
         if (!\Session::has('cart')) {
             \Session::put('cart', array());
@@ -64,11 +64,22 @@ class CartController extends Controller
     }
 
     public function trash() {
+        // Si l'usuari esta amb la sesió iniciada, esborrem la cistella en BD
+        if (auth()->check()) {
+        $order = \App\Models\Orders::where('user_id', auth()->id())
+                    ->where('status', 'cart')
+                    ->first();
+
+        if ($order) {
+            $order->order_items()->delete(); // elimina productes
+        }
+    }
     \Session::forget('cart'); // Usem el mètode forget per a eliminar la sessió 'cart'
 
     // Redirigim a la vista de la cistella, que ara mostrarà que està buida
     return redirect()->route('cart-show');
-}
+    }
+
     //Càlculs de total i subtotal
     public function OrderDetail() {
         // Si la cistella està buida, no deixem veure el detall i tornem al inici

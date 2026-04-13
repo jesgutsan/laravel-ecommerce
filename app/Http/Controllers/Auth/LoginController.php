@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+// use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
+use App\Models\Orders;
 
 class LoginController extends Controller
 {
@@ -36,5 +39,55 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
+    }
+
+    public function logout(Request $request)
+    {
+        $cart = \Session::get('cart');
+
+        if ($cart && count($cart) > 0) {
+            $order = Orders::firstOrCreate(
+                ['user_id' => auth()->id(), 'status' => 'cart'],
+                ['subtotal' => 0, 'shipping' => 0]
+            );
+
+            foreach ($cart as $item) {
+                $order->order_items()->updateOrCreate(
+                    ['product_id' => $item->id],
+                    [
+                        'price' => $item->price,
+                        'quantity' => $item->quantity
+                    ]
+                );
+            }
+            \Session::forget('cart');
+        }
+
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        $order = Orders::where('user_id', $user->id)
+                    ->where('status', 'cart')
+                    ->first();
+
+        if ($order) {
+            $cart = [];
+
+            foreach ($order->order_items as $item) {
+                $product = $item->product;
+                $product->quantity = $item->quantity;
+                $cart[$product->slug] = $product;
+            }
+
+            \Session::put('cart', $cart);
+        }
     }
 }

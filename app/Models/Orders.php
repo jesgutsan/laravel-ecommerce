@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Orders extends Model
 {
     protected $table = 'orders';
-    protected $fillable = ['subtotal', 'shipping', 'user_id'];
+    protected $fillable = ['subtotal', 'shipping', 'user_id', 'status'];
 
     // Una comanda perteneix a un usuari (client)
     public function user()

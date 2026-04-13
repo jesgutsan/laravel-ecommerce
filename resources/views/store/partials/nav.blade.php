@@ -3,11 +3,22 @@
 
     <!-- Esquerre -->
     <div class="d-flex align-items-center">
-      <a class="navbar-brand mb-0" href="#">Botiga Online</a>
-      <!-- <span class="navbar-text ml-3">La meua Botiga Laravel</span> -->
-       <a class="nav-link" href="{{ route('cart-show') }}">
-            🛒 Cistella
-        </a>
+        <a class="navbar-brand mb-0" href="#">Botiga Online</a>
+
+        @php
+            $totalItems = 0;
+            if (session()->has('cart')) {
+                foreach (session('cart') as $item) {
+                    $totalItems += $item->quantity;
+                }
+            }
+        @endphp
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('cart-show') }}">
+                <i class="fa fa-shopping-cart"></i> Cistella ({{ $totalItems }})
+            </a>
+        </li>
     </div>
 
     <!-- Dreta -->
