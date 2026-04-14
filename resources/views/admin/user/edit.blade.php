@@ -1,13 +1,12 @@
 @extends('admin.template')
 
 @section('content')
-<div class="container text-center">
-    <div class="page-header">
+<div class="container">
+    <div class="page-header text-center">
         <h1><i class="fa fa-users"></i> USUARIS <small>[Editar Usuari]</small></h1>
     </div>
-
     <div class="row">
-        <div class="col-md-offset-3 col-md-6">
+        <div class="col-md-6 mx-auto">
             <div class="page">
                 @include('admin.partials.errors')
 
@@ -19,7 +18,28 @@
                         <label for="name">Nom:</label>
                         <input type="text" name="name" value="{{ $user->name }}" class="form-control" required>
                     </div>
-
+                    <br>
+                    <div class="form-group">
+                        <label for="">Cognoms:</label>
+                        <input type="text" name="last_name" value="{{ $user->last_name }}" class="form-control">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" name="email" value="{{ $user->email }}" class="form-control">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="user">Usuari:</label>
+                        <input type="text" name="user" value="{{ $user->user }}" class="form-control">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="password">Contrasenya:</label>
+                        <input type="password" name="password" class="form-control">
+                        <small class="text-info">Deixa el camp en blanc si no vols canviar la contrasenya</small>
+                    </div>
+                    <br>
                     <div class="form-group">
                         <label for="type">Tipus:</label>
                         <select name="type" class="form-control">

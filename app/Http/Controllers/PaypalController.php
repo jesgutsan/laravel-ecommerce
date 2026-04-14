@@ -148,7 +148,7 @@ class PaypalController extends Controller
 
         if (empty($payerId) || empty($token)) {
             return \Redirect::route('home')
-                ->with('message', 'Ha hagut un problema a l`hora de pagar amb Paypal');
+                ->with('message', 'Hi ha hagut un problema a l’hora de pagar amb PayPal');
         }
 
         // Recuperem el pagament i preparem l'execució final
@@ -165,11 +165,11 @@ class PaypalController extends Controller
 
             \Session::forget('cart'); //  Esborrem la cistella després de la compra
             return \Redirect::route('home')
-                ->with('message', 'Compra realitzada correctament');
+                ->with('message', 'Compra realitzada correctament. Gràcies per la teua compra!');
         }
 
         return \Redirect::route('home')
-            ->with('message', 'La compra ha estat cancel·lada');
+            ->with('message', 'La compra ha sigut cancel·lada');
     }
     // Mètode per a guardar l'orde
     private function saveOrder($cart)

@@ -2,8 +2,8 @@
   <div class="row">
 
     <div class="col-md-4">
-      <h3>Botiga Laravel</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+      <h3>Botiga Online</h3>
+      <p>Botiga de Bicicletes</p>
     </div>
 
     <div class="col-md-4">

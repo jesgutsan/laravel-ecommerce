@@ -5,7 +5,7 @@
     <div class="d-flex align-items-center">
       <a class="navbar-brand mb-0" href="#">Botiga Online</a>
       <p class="navbar-text mb-0">
-        <i class='fa fa-dashboard'></i> Backend Botiga
+        <i class='fa fa-dashboard'></i> PANELL D'ADMINISTRACIÓ
       </p>
       <a href="{{ route('home') }}" class="btn btn-secondary ml-2">
         <i class="fa fa-arrow-left"></i> Tornar a la botiga

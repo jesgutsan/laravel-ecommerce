@@ -61,20 +61,36 @@ class UserController extends Controller
         'email'     => 'required|email|unique:users,email,' . $user->id,
         'user'      => 'required|unique:users,user,' . $user->id,
         'type'      => 'required|in:user,admin',
+        'address'   => 'required',
+        ], [
+
+        'name.required' => 'El nom és obligatori',
+        'last_name.required' => 'Els cognoms són obligatoris',
+        'email.required' => 'El correu és obligatori',
+        'email.email' => 'Format de correu incorrecte',
+        'user.required' => "L'usuari és obligatori",
+        'user.unique' => "Aquest usuari ja existeix",
+        'email.unique' => "Aquest correu ja està registrat",
         ]);
 
-        $user->fill($request->all());
+        $user->name = $request->name;
+        $user->last_name = $request->last_name;
+        $user->email = $request->email;
+        $user->user = $request->user;
+        $user->type = $request->type;
+        $user->address = $request->address;
 
-        // Si se introduce una contraseña nueva, la encriptamos
-        if ($request->get('password')) {
-            $user->password = bcrypt($request->get('password'));
+
+        /// Només si s'ha escrit una nova contrasenya
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+            }
+
+            $updated = $user->save();
+
+            $message = $updated ? 'Usuari actualitzat!' : 'Error al actualitzar';
+            return redirect()->route('user.index')->with('message', $message);
         }
-
-        $updated = $user->save();
-
-        $message = $updated ? 'Usuari actualitzat!' : 'Error al actualitzar';
-        return redirect()->route('user.index')->with('message', $message);
-    }
 
     /**
      * Remove the specified resource from storage.

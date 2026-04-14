@@ -13,7 +13,7 @@
                 <tr>
                     <td>Nom:</td>
                     <!-- Combinem nom i cognom de l'usuari autenticat -->
-                    <td>{{ Auth::user()->name . " " . Auth::user()->last_name }}</td>
+                    <td>{{ ucwords(Auth::user()->name) . " " . ucwords(Auth::user()->last_name) }}</td>
                 </tr>
                 <tr>
                     <td>Usuari:</td>
@@ -31,8 +31,8 @@
             </table>
         </div>
         <!-- taula amb els productes  -->
-        <div class="table-responsive">
-            <h3>Dades de la comanda</h3>
+        <div class="table-responsive mt-4">
+            <h3 class="mb-3">Dades de la comanda</h3>
             <table class="table table-striped table-hover table-bordered">
                 <thead>
                     <tr>
@@ -47,21 +47,22 @@
                     @foreach($cart as $item)
                         <tr>
                             <td>{{ $item->name }}</td>
-                            <td>{{ number_format($item->price, 2) }}€</td>
+                            <td>{{ number_format($item->price, 2, ',', '.') }} €</td>
                             <td>{{ $item->quantity }}</td>
                             {{-- Calculem el subtotal de la línia --}}
-                            <td>{{ number_format($item->price * $item->quantity, 2) }}€</td>
+                            <td>{{ number_format($item->price * $item->quantity, 2, ',', '.') }} €</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
         {{-- Mostrem el total calculat pel controlador --}}
-        <h3>
+        <h3 class="mt-4 mb-4">
             <span class="label label-success">
-                Total: {{ number_format($total, 2) }}€
+                Total: {{ number_format($total, 2, ',', '.') }} €
             </span>
         </h3>
+        <hr class="my-4">
         <hr>
 
         {{-- Botons d'acció final --}}
