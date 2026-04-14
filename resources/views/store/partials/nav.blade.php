@@ -14,11 +14,9 @@
             }
         @endphp
 
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('cart-show') }}">
-                <i class="fa fa-shopping-cart"></i> Cistella ({{ $totalItems }})
-            </a>
-        </li>
+        <a class="nav-link" href="{{ route('cart-show') }}">
+            <i class="fa fa-shopping-cart"></i> Cistella ({{ $totalItems }})
+        </a>
     </div>
 
     <!-- Dreta -->

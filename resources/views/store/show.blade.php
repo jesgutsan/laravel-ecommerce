@@ -2,51 +2,39 @@
 
 @section('content')
 
-<div class="container text-center mt-4">
+<div class="container mt-5" style="max-width: 1100px;">
 
     <!-- Header -->
-    <div class="page-header mb-4">
-        <h1>
-            <i class="fa fa-shopping-cart"></i> Detall del producte
-        </h1>
-        <hr>
-    </div>
-
-    <!-- Contingut en dos columnes -->
-    <div class="row">
-
-        <!-- Columna esquerra: imatge -->
-        <div class="col-md-6 mb-4">
-            <div class="product-block">
-                <img src="{{ $product->image }}" class="img-fluid" alt="producte">
+    <div class="row align-items-start">
+        <!-- Image -->
+        <div class="col-md-6">
+            <div class="card shadow-sm p-4 text-center overflow-hidden">
+                <img src="{{ $product->image }}" class="img-fluid product-detail-img" alt="producte" style="height: 420px; object-fit: contain;">
             </div>
         </div>
 
-        <!-- Columna dreta: info -->
-        <div class="col-md-6 mb-4">
-            <div class="product-block product-info panel">
+        <!-- Informació -->
+        <div class="col-md-6">
+            <div class="card shadow-sm p-4">
+                <h2 class="mb-3">{{ $product->name }}</h2>
 
-                <h3>{{ $product->name }}</h3>
-                <p>{{ $product->description }}</p>
+                <p class="text-secondary">{{ $product->description }}</p>
 
-                <h3>
-                    <span class="badge badge-success p-2">
-                        Preu: {{ number_format($product->price, 2) }} €
-                    </span>
+                <h3 class="text-success font-weight-bold mb-4">
+                    {{ number_format($product->price, 2) }} €
                 </h3>
 
-                <a class="btn btn-warning btn-block" href="{{route('cart-add', $product->slug)}}">
-                    Comprar <i class="fa fa-cart-plus fa-2x"></i>
+                <a class="btn btn-warning btn-lg w-100 mb-3" href="{{ route('cart-add', $product->slug) }}">
+                    <i class="fa fa-cart-plus"></i> Afegir a la cistella
+                </a>
+
+                <a class="btn btn-outline-primary btn-sm" href="{{ route('home') }}">
+                    <i class="fa fa-arrow-left"></i> Tornar
                 </a>
             </div>
         </div>
+
     </div>
-    <hr>
-    <p class="text-center mt-3">
-        <a class="btn btn-primary" href="{{ route('home') }}">
-            <i class="fa fa-chevron-circle-right"></i> Tornar
-        </a>
-    </p>
 </div>
 
 @stop

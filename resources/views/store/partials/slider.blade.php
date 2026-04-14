@@ -10,13 +10,13 @@
     <!-- The slideshow -->
     <div class="carousel-inner">
         <div class="carousel-item active">
-        <div class="slider-image" style="background-image: url('{{ asset('img/slider/montana2.jpg') }}');"></div>
+        <div class="slider-image" style="background-image: url('{{ asset('img/slider/Polygon-1.png') }}');"></div>
         </div>
         <div class="carousel-item ">
         <div class="slider-image" style="background-image: url('{{ asset('img/slider/carretera.jpg') }}');"></div>
         </div>
         <div class="carousel-item ">
-        <div class="slider-image" style="background-image: url('{{ asset('img/slider/tandem3.jpg') }}');"></div>
+        <div class="slider-image" style="background-image: url('{{ asset('img/slider/RRD_PD.png') }}');"></div>
         </div>
     </div>
 

@@ -23,9 +23,6 @@
         <li><a href="#"><i class="fa fa-youtube-square fa-2x"></i></a></li>
         <li><a href="#"><i class="fa fa-linkedin-square fa-2x"></i></a></li>
       </ul>
-
-      <h3>Escriu-nos a:</h3>
-      <i class="fa fa-at"></i> <a href="#" style="color:orange;">chusgutierrez80@gmail.com</a>
     </div>
 
   </div>
