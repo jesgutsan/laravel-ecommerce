@@ -53,8 +53,20 @@ class RegisterController extends Controller
             'last_name' => ['required', 'string', 'max:255'],
             'user'      => ['required', 'string', 'max:255', 'unique:users'],
             'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'address'   => ['required', 'string'], 
+            'address'   => ['required', 'string'],
             'password'  => ['required', 'string', 'min:8', 'confirmed'],
+        ], [
+            'name.required' => 'El nom és obligatori.',
+            'last_name.required' => 'El cognom és obligatori.',
+            'user.required' => 'El nom d\'usuari és obligatori.',
+            'user.unique' => 'Aquest nom d\'usuari ja està en ús.',
+            'email.required' => 'El correu electrònic és obligatori.',
+            'email.email' => 'Format de correu incorrecte.',
+            'email.unique' => 'Aquest correu ja està registrat.',
+            'address.required' => 'La direcció es obligatoria.',
+            'password.required' => 'La contrasenya es obligatoria.',
+            'password.min' => 'La contrasenya ha de tenir almenys 8 caràcters.',
+            'password.confirmed' => 'Les contrasenyes no coincideixen.',
         ]);
     }
 

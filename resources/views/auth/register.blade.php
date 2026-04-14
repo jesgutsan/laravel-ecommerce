@@ -14,49 +14,81 @@
                     <i class="fa fa-user-plus"></i> Registrar-se
                 </h2>
 
-                <form method="POST" action="{{ route('register') }}">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        Revisa els errors del formulari
+                    </div>
+                @endif
+
+                <form method="POST" action="{{ route('register') }}" novalidate>
                     @csrf
 
                     <!-- NOM -->
                     <div class="form-group mb-3">
                         <label>Nom</label>
-                        <input type="text" class="form-control" name="name" value="{{ old('name') }}" required>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror"
+                        name="name" value="{{ old('name') }}" required>
+                        @error('name')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- COGNOMS -->
                     <div class="form-group mb-3">
                         <label>Cognoms</label>
-                        <input type="text" class="form-control" name="last_name" value="{{ old('last_name') }}" required>
+                        <input type="text" class="form-control @error('last_name') is-invalid @enderror"
+                        name="last_name" value="{{ old('last_name') }}" required>
+                        @error('last_name')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- USUARI -->
                     <div class="form-group mb-3">
                         <label>Usuari</label>
-                        <input type="text" class="form-control" name="user" value="{{ old('user') }}" required>
+                        <input type="text" class="form-control @error('user') is-invalid @enderror"
+                        name="user" value="{{ old('user') }}" required>
+                        @error('user')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- EMAIL -->
                     <div class="form-group mb-3">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                        <input type="email" class="form-control @error('email') is-invalid @enderror"
+                        name="email" value="{{ old('email') }}" required>
+                        @error('email')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- ADREÇA -->
                     <div class="form-group mb-3">
                         <label>Adreça</label>
-                        <textarea class="form-control" name="address" required>{{ old('address') }}</textarea>
+                        <textarea class="form-control @error('address') is-invalid @enderror"
+                        name="address" required>{{ old('address') }}</textarea>
+                        @error('address')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- PASSWORD -->
                     <div class="form-group mb-3">
                         <label>Contrasenya</label>
-                        <input type="password" class="form-control" name="password" required>
+                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
+                        @error('password')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- CONFIRM -->
                     <div class="form-group mb-4">
                         <label>Confirmar contrasenya</label>
-                        <input type="password" class="form-control" name="password_confirmation" required>
+                        <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" required>
+                        @error('password_confirmation')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- BOTÓ -->
