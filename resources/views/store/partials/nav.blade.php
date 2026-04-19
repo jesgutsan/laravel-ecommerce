@@ -34,10 +34,10 @@
         <!-- Dreta -->
         <ul class="navbar-nav ml-auto align-items-lg-center">
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('sobre') }}">Sobre nosaltres</a>
+                <a class="nav-link {{ request()->routeIs('sobre') ? 'active' : '' }}" href="{{ route('sobre') }}">Sobre nosaltres</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('contacte') }}">Contacte</a>
+                <a class="nav-link {{ request()->routeIs('contacte') ? 'active' : '' }}" href="{{ route('contacte') }}">Contacte</a>
             </li>
 
             @include('store.partials.menu-user')
