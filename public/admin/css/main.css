@@ -16,6 +16,7 @@ h1 { color: orange; }
 
 main {
     flex: 1;
+    padding-bottom: 20px;
 }
 
 footer {
@@ -48,3 +49,22 @@ footer h3 {
     font-size: 25px;
 }
 
+.navbar {
+    height: auto;
+}
+
+.navbar-collapse {
+    margin-bottom: 20px;
+}
+
+
+
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        margin-top: 10px;
+    }
+
+    .navbar-nav .nav-item {
+        margin-bottom: 8px;
+    }
+}

@@ -26,8 +26,10 @@
     <!-- Canvia a la vista de admin -->
     @include('admin.partials.nav')
 
-    <main class="page">
-        @yield('content') <!-- Ací s'afegirà el contingut específic de cada vista -->
+    <main>
+        <div class="page">
+            @yield('content')
+        </div>
     </main>
 
     @include('admin.partials.footer') <!-- Canvia a la vista de admin -->
