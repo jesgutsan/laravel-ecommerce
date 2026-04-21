@@ -49,23 +49,36 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name'      => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'user'      => ['required', 'string', 'max:255', 'unique:users'],
+            'name'      => ['required', 'min:2', 'string', 'max:255', 'regex:/^[a-zA-ZÀ-ÿ\s]+$/u'],
+            'last_name' => ['required', 'string', 'min:2', 'max:255',   'regex:/^[a-zA-ZÀ-ÿ\s]+$/u'],
+            'user'      => ['required', 'string', 'min:4', 'max:255', 'alpha_num', 'unique:users'],
             'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'address'   => ['required', 'string'],
+            'address'   => ['required', 'string', 'min:5', 'regex:/^[a-zA-Z0-9À-ÿ\s,.-]+$/u'],
             'password'  => ['required', 'string', 'min:8', 'confirmed'],
         ], [
             'name.required' => 'El nom és obligatori.',
+            'name.min' => 'El nom ha de tindre almenys 2 caràcters.',
+            'name.regex' => 'El nom només pot contindre lletres i espais.',
+
             'last_name.required' => 'El cognom és obligatori.',
+            'last_name.min' => 'El cognom ha de tindre almenys 2 caràcters.',
+            'last_name.regex' => 'El cognom només pot contindre lletres i espais.',
+
             'user.required' => 'El nom d\'usuari és obligatori.',
+            'user.min' => 'El nom d\'usuari ha de tindre almenys 4 caràcters.',
+            'user.alpha_num' => 'El nom d\'usuari només pot contindre lletres i números.',
             'user.unique' => 'Aquest nom d\'usuari ja està en ús.',
+
             'email.required' => 'El correu electrònic és obligatori.',
             'email.email' => 'Format de correu incorrecte.',
             'email.unique' => 'Aquest correu ja està registrat.',
-            'address.required' => 'La direcció es obligatoria.',
-            'password.required' => 'La contrasenya es obligatoria.',
-            'password.min' => 'La contrasenya ha de tenir almenys 8 caràcters.',
+
+            'address.required' => 'La direcció és obligatòria.',
+            'address.min' => 'La direcció ha de tindre almenys 5 caràcters.',
+            'address.regex' => 'La direcció ha de contindre almenys una lletra.',
+
+            'password.required' => 'La contrasenya és obligatòria.',
+            'password.min' => 'La contrasenya ha de tindre almenys 8 caràcters.',
             'password.confirmed' => 'Les contrasenyes no coincideixen.',
         ]);
     }

@@ -89,6 +89,7 @@
                 return matchesSearch && matchesCategory;
             }
         }
+
     }).mount('#app');
 </script>
 

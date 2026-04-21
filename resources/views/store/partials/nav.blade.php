@@ -2,7 +2,7 @@
   <div class="container-fluid">
 
     <!-- Logo -->
-    <a class="navbar-brand" href="#">Botiga Online</a>
+    <a class="navbar-brand" href="{{ route('home') }}">Botiga Online</a>
 
     <!-- Botó hamburguesa -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarStore">
@@ -22,22 +22,23 @@
                     }
                 }
             @endphp
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('cart-show') }}">
-                    <i class="fa fa-shopping-cart"></i> Cistella ({{ $totalItems }})
-                </a>
-            </li>
-
         </ul>
 
         <!-- Dreta -->
         <ul class="navbar-nav ml-auto align-items-lg-center">
-            <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('sobre') ? 'active' : '' }}" href="{{ route('sobre') }}">Sobre nosaltres</a>
+            <li class="nav-item mx-2">
+                <a class="nav-link" href="{{ route('home') }}">Inici</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('contacte') ? 'active' : '' }}" href="{{ route('contacte') }}">Contacte</a>
+            <li class="nav-item mx-2">
+                <a class="nav-link" href="{{ route('sobre') }}">Sobre nosaltres</a>
+            </li>
+            <li class="nav-item mx-2">
+                <a class="nav-link" href="{{ route('contacte') }}">Contacte</a>
+            </li>
+            <li class="nav-item mx-2">
+                <a class="nav-link" href="{{ route('cart-show') }}">
+                    <i class="fa fa-shopping-cart"></i> Cistella ({{ $totalItems }})
+                </a>
             </li>
 
             @include('store.partials.menu-user')

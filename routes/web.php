@@ -12,7 +12,7 @@ use App\Models\Category;
 
 Route::get('admin/home', function () {
     return view('admin.home');
-});
+})->name('admin.home');
 
 // Ruta per a la gestió de comandes en el backend
 Route::resource('admin/order', App\Http\Controllers\Admin\OrderController::class);
