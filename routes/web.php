@@ -39,7 +39,10 @@ Route::get('/cart/delete/{product}', [CartController::class, 'delete'])->name('c
 Route::get('/cart/update/{product}/{quantity?}', [CartController::class, 'update'])->name('cart-update');
 
 // Autenticació
-Auth::routes();
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+// Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('dashboard');
 
 // Detall de la comanda (Protegit)
