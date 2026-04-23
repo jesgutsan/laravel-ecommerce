@@ -11,7 +11,9 @@
             <div class="dropdown-divider"></div>
         @endif
 
-        <a class="dropdown-item" href="{{ route('logout') }}">Tancar sessió</a>
+        @if (Route::has('logout'))
+            <a class="dropdown-item" href="{{ route('logout') }}">Tancar sessió</a>
+        @endif
 
     </div>
 </li>
@@ -24,10 +26,16 @@
     </a>
 
     <div class="dropdown-menu dropdown-menu-right">
-        <a class="dropdown-item" href="{{ route('login') }}">Inici de sessió</a>
-        <a class="dropdown-item" href="{{ route('register') }}">Registre</a>
+
+        @if (Route::has('login'))
+            <a class="dropdown-item" href="{{ route('login') }}">Inici de sessió</a>
+        @endif
+
+        @if (Route::has('register'))
+            <a class="dropdown-item" href="{{ route('register') }}">Registre</a>
+        @endif
+
     </div>
 </li>
 
 @endif
-
