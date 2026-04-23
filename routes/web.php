@@ -40,7 +40,6 @@ Route::get('/cart/update/{product}/{quantity?}', [CartController::class, 'update
 
 // Autenticació
 Auth::routes();
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/home', [HomeController::class, 'index'])->name('dashboard');
 
 // Detall de la comanda (Protegit)
