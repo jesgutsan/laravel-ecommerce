@@ -4,7 +4,7 @@ html, body {
 
 body{
     margin: 0;
-    background: orange;
+    background: orange !important;
     font-family: 'Montserrat', sans-serif;
     display: flex;
     flex-direction: column;
