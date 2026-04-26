@@ -53,12 +53,13 @@ class PaypalController extends Controller
         $subtotal = 0;
         $cart = \Session::get('cart');
         $currency = 'EUR';
+        dd($cart);
 
         foreach($cart as $producto){
             $item = new Item();
             $item->setName($producto->name)
                 ->setCurrency($currency)
-                // ->setDescription($producto->extract)
+                ->setDescription($producto->extract)
                 ->setQuantity($producto->quantity)
                 // Usem number_format per a assegurar compatibilitat amb la API
                 ->setPrice(number_format($producto->price, 2, '.', ''));
