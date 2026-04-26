@@ -23,5 +23,10 @@ class Product extends Model
     // Un producte perteneix a una categoria
         return $this->belongsTo(Category::class);
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }
 
