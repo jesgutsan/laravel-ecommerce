@@ -53,7 +53,6 @@ class PaypalController extends Controller
         $subtotal = 0;
         $cart = \Session::get('cart');
         $currency = 'EUR';
-        dd($cart);
 
         foreach($cart as $producto){
             $item = new Item();
