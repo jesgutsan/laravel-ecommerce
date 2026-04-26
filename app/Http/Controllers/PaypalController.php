@@ -99,7 +99,7 @@ class PaypalController extends Controller
         $payment->setIntent('Sale')
                 ->setPayer($payer)
                 ->setRedirectUrls($redirect_urls)
-                ->setTransactions(array($transaction));
+                ->setTransactions([$transaction]);
 
         // Executem la transacció amb con PayPal
         try {
