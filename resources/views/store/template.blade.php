@@ -24,7 +24,7 @@
 
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/botiga-laravel/public/js/main.js"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
 
 
 
