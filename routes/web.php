@@ -65,8 +65,5 @@ Route::view('/sobre-nosaltres', 'sobre-nosaltres')->name('sobre');
 
 Route::view('/contacte', 'contacte')->name('contacte');
 
-Route::get('/migrate', function () {
-    Artisan::call('migrate', ['--force' => true]);
-    return 'Migrated';
-});
+
 
