@@ -58,7 +58,7 @@ class PaypalController extends Controller
             $item = new Item();
             $item->setName($producto->name)
                 ->setCurrency($currency)
-                ->setDescription($producto->extract)
+                // ->setDescription($producto->extract)
                 ->setQuantity($producto->quantity)
                 // Usem number_format per a assegurar compatibilitat amb la API
                 ->setPrice(number_format($producto->price, 2, '.', ''));
