@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Models\Orders;
+use App\Models\OrderItems;
 
 class PaymentController extends Controller
 {
@@ -24,8 +26,6 @@ class PaymentController extends Controller
 
         $enviament = 100;
         $total += $enviament;
-
-
 
         $token = $this->getAccessToken();
 
@@ -68,6 +68,8 @@ class PaymentController extends Controller
         $result = $response->json();
 
         if (isset($result['status']) && $result['status'] === 'COMPLETED') {
+            $this->saveOrder(\Session::get('cart'));
+
             \Session::forget('cart');
 
             return redirect()->route('cart-show')
@@ -76,6 +78,49 @@ class PaymentController extends Controller
 
         return redirect()->route('cart-show')
             ->with('error', 'No s\'ha pogut confirmar el pagament.');
+    }
+
+    private function saveOrder($cart)
+    {
+        $subtotal = 0;
+
+        foreach ($cart as $item) {
+            $subtotal += $item->price * $item->quantity;
+        }
+
+        $order = Orders::where('user_id', \Auth::user()->id)
+            ->where('status', 'cart')
+            ->first();
+
+        if (!$order) {
+            $order = Orders::create([
+                'subtotal' => $subtotal,
+                'shipping' => 100,
+                'user_id' => \Auth::user()->id,
+                'status' => 'paid'
+            ]);
+        } else {
+            $order->subtotal = $subtotal;
+            $order->shipping = 100;
+            $order->status = 'paid';
+            $order->save();
+        }
+
+        $order->order_items()->delete();
+
+        foreach ($cart as $item) {
+            $this->saveOrderItem($item, $order->id);
+        }
+    }
+
+    private function saveOrderItem($item, $order_id)
+    {
+        OrderItems::create([
+            'quantity' => $item->quantity,
+            'price' => $item->price,
+            'product_id' => $item->id,
+            'order_id' => $order_id
+        ]);
     }
 
     private function getAccessToken()
@@ -90,5 +135,3 @@ class PaymentController extends Controller
         return $response->json()['access_token'];
     }
 }
-
-
