@@ -65,5 +65,9 @@ Route::view('/sobre-nosaltres', 'sobre-nosaltres')->name('sobre');
 
 Route::view('/contacte', 'contacte')->name('contacte');
 
+Route::get('/payment-new', [App\Http\Controllers\PaymentController::class, 'create']);
+
+Route::get('/payment-new/status', [App\Http\Controllers\PaymentController::class, 'status'])->name('payment-new.status');
+
 
 

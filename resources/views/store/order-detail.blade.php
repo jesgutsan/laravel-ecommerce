@@ -73,7 +73,7 @@
             </a>
 
             {{-- Botó que INICIA el pagament amb PayPal --}}
-            <a href="{{ route('payment') }}" class="btn btn-warning">
+            <a href="{{ url('/payment-new') }}" class="btn btn-warning">
                 Pagar amb <i class="fa fa-cc-paypal fa-2x"></i>
             </a>
         </p>
