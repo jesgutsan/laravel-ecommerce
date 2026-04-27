@@ -10,7 +10,7 @@
         </a>
 
         <div class="ml-auto dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">
                 <i class="fa fa-user"></i>
                 @if(Auth::check())
                     {{ Auth::user()->user }}
@@ -20,14 +20,16 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-right">
+
                 <a class="dropdown-item" href="#"
-                onclick="event.preventDefault(); document.getElementById('logout-form-admin').submit();">
-                Tancar sessió
+                   onclick="event.preventDefault(); document.getElementById('logout-form-admin').submit();">
+                    Tancar sessió
                 </a>
 
                 <form id="logout-form-admin" action="{{ route('logout') }}" method="POST" style="display:none;">
                     @csrf
                 </form>
+
             </div>
         </div>
 
