@@ -42,9 +42,7 @@ class PaymentController extends Controller
         $orderId = $request->get('token');
 
         $response = Http::withToken($token)
-            ->withHeaders([
-                'Content-Type' => 'application/json'
-            ])
+            ->withBody('{}', 'application/json')
             ->post("https://api-m.sandbox.paypal.com/v2/checkout/orders/{$orderId}/capture");
 
         $result = $response->json();
