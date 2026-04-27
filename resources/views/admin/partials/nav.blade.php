@@ -20,7 +20,14 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="{{ route('logout') }}">Tancar sessió</a>
+                <a class="dropdown-item" href="#"
+                onclick="event.preventDefault(); document.getElementById('logout-form-admin').submit();">
+                Tancar sessió
+                </a>
+
+                <form id="logout-form-admin" action="{{ route('logout') }}" method="POST" style="display:none;">
+                    @csrf
+                </form>
             </div>
         </div>
 

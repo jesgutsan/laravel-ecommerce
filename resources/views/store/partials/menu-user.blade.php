@@ -12,7 +12,14 @@
         @endif
 
         @if (Route::has('logout'))
-            <a class="dropdown-item" href="{{ route('logout') }}">Tancar sessió</a>
+            <a class="dropdown-item" href="#"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    Tancar sessió
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
+                @csrf
+            </form>
         @endif
 
     </div>
