@@ -39,15 +39,17 @@ class PaymentController extends Controller
     public function status(Request $request)
     {
         $token = $this->getAccessToken();
-        $orderId = $request->query('token');
+        $orderId = $request->get('token');
 
         $response = Http::withToken($token)
+            ->withHeaders([
+                'Content-Type' => 'application/json'
+            ])
             ->post("https://api-m.sandbox.paypal.com/v2/checkout/orders/{$orderId}/capture");
 
         $result = $response->json();
         dd($result);
         if (isset($result['status']) && $result['status'] === 'COMPLETED') {
-
             return redirect()->route('cart-show')
                 ->with('message', 'Pagament realitzat correctament amb PayPal.');
         }
