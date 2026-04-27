@@ -45,8 +45,9 @@ class PaymentController extends Controller
             ->post("https://api-m.sandbox.paypal.com/v2/checkout/orders/{$orderId}/capture");
 
         $result = $response->json();
-
+        dd($result);
         if (isset($result['status']) && $result['status'] === 'COMPLETED') {
+
             return redirect()->route('cart-show')
                 ->with('message', 'Pagament realitzat correctament amb PayPal.');
         }
