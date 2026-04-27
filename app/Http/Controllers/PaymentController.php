@@ -9,6 +9,24 @@ class PaymentController extends Controller
 {
     public function create()
     {
+        $cart = \Session::get('cart');
+
+        if (!$cart || count($cart) == 0) {
+            return redirect()->route('cart-show')
+                ->with('error', 'La cistella està buida.');
+        }
+
+        $total = 0;
+
+        foreach ($cart as $producte) {
+            $total += $producte->price * $producte->quantity;
+        }
+
+        $enviament = 100;
+        $total += $enviament;
+
+
+
         $token = $this->getAccessToken();
 
         $response = Http::withToken($token)
@@ -17,7 +35,7 @@ class PaymentController extends Controller
                 'purchase_units' => [[
                     'amount' => [
                         'currency_code' => 'EUR',
-                        'value' => '10.00'
+                        'value' => number_format($total, 2, '.', '')
                     ]
                 ]],
                 'application_context' => [
@@ -26,14 +44,16 @@ class PaymentController extends Controller
                 ]
             ]);
 
-            $order = $response->json();
+        $order = $response->json();
 
-            foreach ($order['links'] as $link) {
-                if ($link['rel'] === 'approve') {
-                    return redirect()->away($link['href']);
-                }
+        foreach ($order['links'] as $link) {
+            if ($link['rel'] === 'approve') {
+                return redirect()->away($link['href']);
             }
-            return redirect()->route('home')->with('error', 'No s\'ha pogut crear la comanda.');
+        }
+
+        return redirect()->route('home')
+            ->with('error', 'No s\'ha pogut crear la comanda.');
     }
 
     public function status(Request $request)
@@ -46,16 +66,17 @@ class PaymentController extends Controller
             ->post("https://api-m.sandbox.paypal.com/v2/checkout/orders/{$orderId}/capture");
 
         $result = $response->json();
+
         if (isset($result['status']) && $result['status'] === 'COMPLETED') {
+            \Session::forget('cart');
+
             return redirect()->route('cart-show')
                 ->with('message', 'Pagament realitzat correctament amb PayPal.');
         }
 
         return redirect()->route('cart-show')
-            ->with('message', 'No s\'ha pogut confirmar el pagament.');
+            ->with('error', 'No s\'ha pogut confirmar el pagament.');
     }
-
-
 
     private function getAccessToken()
     {
@@ -68,7 +89,6 @@ class PaymentController extends Controller
 
         return $response->json()['access_token'];
     }
-
 }
 
 

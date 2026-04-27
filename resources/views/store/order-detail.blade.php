@@ -59,7 +59,12 @@
         {{-- Mostrem el total calculat pel controlador --}}
         <h3 class="mt-4 mb-4">
             <span class="label label-success">
-                Total: {{ number_format($total, 2, ',', '.') }} €
+                @php
+                    $enviament = 100;
+                    $totalFinal = $total + $enviament;
+                @endphp
+                <h4>Enviament: {{ number_format($enviament, 2, ',', '.') }} €</h4>
+                <h3>Total: {{ number_format($totalFinal, 2, ',', '.') }} €</h3>
             </span>
         </h3>
         <hr class="my-4">
