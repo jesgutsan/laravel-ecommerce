@@ -37,7 +37,7 @@
                                     </button>
                                 </form>
                             </td>
-                            <td>{{ $order->created_at->format('d/m/Y H:i') }}</td>
+                            <td>{{ $order->created_at->setTimezone('Europe/Madrid')->format('d/m/Y H:i') }}</td>
                             <td>{{ $order->user->name }} {{ $order->user->last_name }}</td>
                             <td>{{ number_format($order->subtotal, 2) }}€</td>
                             <td>{{ number_format($order->shipping, 2) }}€</td>
