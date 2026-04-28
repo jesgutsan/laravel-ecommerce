@@ -20,14 +20,14 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('register') }}" novalidate>
+                <form method="POST" action="{{ route('register') }}" novalidate autocomplete="off">
                     @csrf
 
                     <!-- NOM -->
                     <div class="form-group mb-3">
                         <label>Nom</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror"
-                        name="name" value="{{ old('name') }}" required>
+                        name="name" value="{{ old('name') }}" autocomplete="given-name" required>
                         @error('name')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -37,7 +37,7 @@
                     <div class="form-group mb-3">
                         <label>Cognoms</label>
                         <input type="text" class="form-control @error('last_name') is-invalid @enderror"
-                        name="last_name" value="{{ old('last_name') }}" required>
+                        name="last_name" value="{{ old('last_name') }}" autocomplete="family-name" required>
                         @error('last_name')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -47,7 +47,7 @@
                     <div class="form-group mb-3">
                         <label>Usuari</label>
                         <input type="text" class="form-control @error('user') is-invalid @enderror"
-                        name="user" value="{{ old('user') }}" required>
+                        name="user" value="{{ old('user') }}" autocomplete="off" required>
                         @error('user')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -57,7 +57,7 @@
                     <div class="form-group mb-3">
                         <label>Email</label>
                         <input type="email" class="form-control @error('email') is-invalid @enderror"
-                        name="email" value="{{ old('email') }}" required>
+                        name="email" value="{{ old('email') }}" autocomplete="email" required>
                         @error('email')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -67,7 +67,7 @@
                     <div class="form-group mb-3">
                         <label>Adreça</label>
                         <textarea class="form-control @error('address') is-invalid @enderror"
-                        name="address" required>{{ old('address') }}</textarea>
+                        name="address" autocomplete="street-address" required>{{ old('address') }}</textarea>
                         @error('address')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -80,7 +80,9 @@
                         <div style="position: relative;">
                             <input id="password" type="password"
                                 class="form-control @error('password') is-invalid @enderror"
-                                name="password" required
+                                name="password"
+                                autocomplete="new-password"
+                                required
                                 style="padding-right: 45px;">
 
                             <button type="button" onclick="togglePassword('password')"
@@ -101,7 +103,9 @@
                         <div style="position: relative;">
                             <input id="password-confirm" type="password"
                                 class="form-control @error('password_confirmation') is-invalid @enderror"
-                                name="password_confirmation" required
+                                name="password_confirmation"
+                                autocomplete="new-password"
+                                required
                                 style="padding-right: 45px;">
 
                             <button type="button" onclick="togglePassword('password-confirm')"
