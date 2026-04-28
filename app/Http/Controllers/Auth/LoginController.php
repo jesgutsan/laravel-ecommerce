@@ -88,7 +88,9 @@ class LoginController extends Controller
                 $cart[$product->slug] = $product;
             }
 
-            \Session::put('cart', $cart);
+            if (!\Session::has('cart') || count(\Session::get('cart')) == 0) {
+                \Session::put('cart', $cart);
+            }
         }
     }
 }
