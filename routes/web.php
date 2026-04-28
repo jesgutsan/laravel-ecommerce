@@ -9,6 +9,10 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaypalController;
 use App\Models\Category;
+use App\Http\Controllers\Auth\RegisterController;
+
+Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('register', [RegisterController::class, 'register']);
 
 Route::get('admin/home', function () {
     return view('admin.home');

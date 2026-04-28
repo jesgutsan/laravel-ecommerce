@@ -1,4 +1,5 @@
 @if(Auth::check())
+
 <li class="nav-item dropdown">
     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">
         <i class="fa fa-user"></i> {{ Auth::user()->user }}
@@ -25,22 +26,10 @@
 
 @else
 
-<li class="nav-item dropdown">
-    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">
-        <i class="fa fa-user"></i>
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('login') }}">
+        <i class="fa fa-user"></i> Inici de sessió
     </a>
-
-    <div class="dropdown-menu dropdown-menu-right">
-
-        @if (Route::has('login'))
-            <a class="dropdown-item" href="{{ route('login') }}">Inici de sessió</a>
-        @endif
-
-        @if (Route::has('register'))
-            <a class="dropdown-item" href="{{ route('register') }}">Registre</a>
-        @endif
-
-    </div>
 </li>
 
 @endif

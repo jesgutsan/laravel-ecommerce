@@ -33,9 +33,19 @@
                     <!-- PASSWORD -->
                     <div class="form-group mb-3">
                         <label>Contrasenya</label>
-                        <input id="password" type="password"
-                            class="form-control @error('password') is-invalid @enderror"
-                            name="password" required>
+
+                        <div style="position: relative;">
+                            <input id="password" type="password"
+                                class="form-control @error('password') is-invalid @enderror"
+                                name="password" required
+                                style="padding-right: 45px;">
+
+                            <button type="button" onclick="togglePassword('password')"
+                                style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+                                    border: none; background: transparent; cursor: pointer;">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </div>
 
                         @error('password')
                             <span class="text-danger">{{ $message }}</span>
@@ -54,6 +64,10 @@
                     <button type="submit" class="btn btn-warning w-100">
                         <i class="fa fa-sign-in"></i> Entrar
                     </button>
+                    <p class="mt-3 text-center">
+                        No tens compte?
+                        <a href="{{ route('register') }}">Registra’t</a>
+                    </p>
 
                 </form>
 
@@ -64,5 +78,6 @@
     </div>
 
 </div>
+
 
 @endsection

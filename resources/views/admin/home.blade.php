@@ -3,11 +3,8 @@
 @section('content')
 <div class="container text-center">
     <div class="page-header">
-        <h1><i class="fa fa-rocket"></i> BOTIGA LARAVEL - BACKEND</h1>
+        <h1>BOTIGA LARAVEL - PANELL D'ADMINISTRACIÓ</h1>
     </div>
-
-    <h2>Benvingut(a) {{ Auth::user()->user }} al Panell d'administració.</h2><hr>
-
     <div class="row">
         <!-- Botó per a Categoríes -->
         <div class="col-md-6">

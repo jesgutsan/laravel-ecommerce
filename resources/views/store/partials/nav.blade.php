@@ -26,6 +26,12 @@
 
         <!-- Dreta -->
         <ul class="navbar-nav ml-auto align-items-lg-center">
+            @include('store.partials.menu-user')
+            <li class="nav-item mx-2">
+                <a class="nav-link" href="{{ route('cart-show') }}">
+                    <i class="fa fa-shopping-cart"></i> Cistella ({{ $totalItems }})
+                </a>
+            </li>
             <li class="nav-item mx-2">
                 <a class="nav-link" href="{{ route('home') }}">Inici</a>
             </li>
@@ -35,13 +41,6 @@
             <li class="nav-item mx-2">
                 <a class="nav-link" href="{{ route('contacte') }}">Contacte</a>
             </li>
-            <li class="nav-item mx-2">
-                <a class="nav-link" href="{{ route('cart-show') }}">
-                    <i class="fa fa-shopping-cart"></i> Cistella ({{ $totalItems }})
-                </a>
-            </li>
-
-            @include('store.partials.menu-user')
         </ul>
 
     </div>

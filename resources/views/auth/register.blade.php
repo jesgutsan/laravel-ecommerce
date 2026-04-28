@@ -76,16 +76,41 @@
                     <!-- PASSWORD -->
                     <div class="form-group mb-3">
                         <label>Contrasenya</label>
-                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
+
+                        <div style="position: relative;">
+                            <input id="password" type="password"
+                                class="form-control @error('password') is-invalid @enderror"
+                                name="password" required
+                                style="padding-right: 45px;">
+
+                            <button type="button" onclick="togglePassword('password')"
+                                style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+                                    border: none; background: transparent; cursor: pointer;">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </div>
+
                         @error('password')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-
                     <!-- CONFIRM -->
                     <div class="form-group mb-4">
                         <label>Confirmar contrasenya</label>
-                        <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" required>
+
+                        <div style="position: relative;">
+                            <input id="password-confirm" type="password"
+                                class="form-control @error('password_confirmation') is-invalid @enderror"
+                                name="password_confirmation" required
+                                style="padding-right: 45px;">
+
+                            <button type="button" onclick="togglePassword('password-confirm')"
+                                style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+                                    border: none; background: transparent; cursor: pointer;">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </div>
+
                         @error('password_confirmation')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
