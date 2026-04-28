@@ -16,7 +16,7 @@ class OrderController extends Controller
     {
         $orders = Orders::with('user')
         ->where('status', '!=', 'cart')
-        ->orderBy('id', 'desc')
+        ->orderBy('created_at', 'desc')
         ->get();
 
         return view('admin.order.index', compact('orders'));

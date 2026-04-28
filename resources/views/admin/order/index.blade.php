@@ -13,7 +13,7 @@
                     <tr>
                         <th>Veure</th>
                         <th>Eliminar</th>
-                        <th>Data</th>
+                        <th>Data i Hora</th>
                         <th>Usuari</th>
                         <th>Subtotal</th>
                         <th>Enviament</th>
@@ -37,7 +37,7 @@
                                     </button>
                                 </form>
                             </td>
-                            <td>{{ $order->created_at->format('d-m-Y') }}</td>
+                            <td>{{ $order->created_at->format('d/m/Y H:i') }}</td>
                             <td>{{ $order->user->name }} {{ $order->user->last_name }}</td>
                             <td>{{ number_format($order->subtotal, 2) }}€</td>
                             <td>{{ number_format($order->shipping, 2) }}€</td>
