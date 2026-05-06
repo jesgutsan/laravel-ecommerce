@@ -13,7 +13,8 @@ Route::get('register', [RegisterController::class, 'showRegistrationForm'])->nam
 Route::post('register', [RegisterController::class, 'register']);
 
 // Rutes d'administració protegides
-Route::middleware('auth')->group(function () {
+
+Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('admin/home', function () {
         return view('admin.home');
@@ -25,8 +26,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('admin/product', App\Http\Controllers\Admin\ProductController::class);
 
 });
-
-
 
 // Injecció de dependències per a productes
 Route::bind('product', function($slug){
