@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Auth\LoginController;
@@ -13,12 +12,21 @@ use App\Http\Controllers\Auth\RegisterController;
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
 
-Route::get('admin/home', function () {
-    return view('admin.home');
-})->name('admin.home');
+// Rutes d'administració protegides
+Route::middleware('auth')->group(function () {
 
-// Ruta per a la gestió de comandes en el backend
-Route::resource('admin/order', App\Http\Controllers\Admin\OrderController::class);
+    Route::get('admin/home', function () {
+        return view('admin.home');
+    })->name('admin.home');
+
+    Route::resource('admin/order', App\Http\Controllers\Admin\OrderController::class);
+    Route::resource('admin/category', CategoryController::class);
+    Route::resource('admin/user', App\Http\Controllers\Admin\UserController::class);
+    Route::resource('admin/product', App\Http\Controllers\Admin\ProductController::class);
+
+});
+
+
 
 // Injecció de dependències per a productes
 Route::bind('product', function($slug){
@@ -52,12 +60,6 @@ Route::get('/home', [HomeController::class, 'index'])->name('dashboard');
 Route::get('/order-detail', [CartController::class, 'OrderDetail'])
     ->middleware('auth')
     ->name('order-detail');
-
-Route::resource('admin/category', CategoryController::class);
-
-Route::resource('admin/product', App\Http\Controllers\Admin\ProductController::class);
-
-Route::resource('admin/user', App\Http\Controllers\Admin\UserController::class);
 
 Route::view('/sobre-nosaltres', 'sobre-nosaltres')->name('sobre');
 
