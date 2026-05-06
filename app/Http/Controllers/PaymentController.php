@@ -39,7 +39,7 @@ class PaymentController extends Controller
                     ]
                 ]],
                 'application_context' => [
-                    'return_url' => route('payment-new.status'),
+                    'return_url' => route('payment.status'),
                     'cancel_url' => route('cart-show')
                 ]
             ]);

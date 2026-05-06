@@ -7,7 +7,6 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PaypalController;
 use App\Models\Category;
 use App\Http\Controllers\Auth\RegisterController;
 
@@ -54,11 +53,6 @@ Route::get('/order-detail', [CartController::class, 'OrderDetail'])
     ->middleware('auth')
     ->name('order-detail');
 
-// Rutes de PayPal
-Route::get('payment', [PaypalController::class, 'postPayment'])->name('payment');
-
-Route::get('payment/status', [PaypalController::class, 'getPaymentStatus'])->name('payment.status');
-
 Route::resource('admin/category', CategoryController::class);
 
 Route::resource('admin/product', App\Http\Controllers\Admin\ProductController::class);
@@ -69,9 +63,10 @@ Route::view('/sobre-nosaltres', 'sobre-nosaltres')->name('sobre');
 
 Route::view('/contacte', 'contacte')->name('contacte');
 
-Route::get('/payment-new', [App\Http\Controllers\PaymentController::class, 'create']);
+// Rutes de PayPal
 
-Route::get('/payment-new/status', [App\Http\Controllers\PaymentController::class, 'status'])->name('payment-new.status');
+Route::get('/payment', [App\Http\Controllers\PaymentController::class, 'create'])->name('payment');
+Route::get('/payment/status', [App\Http\Controllers\PaymentController::class, 'status'])->name('payment.status');
 
 
 
