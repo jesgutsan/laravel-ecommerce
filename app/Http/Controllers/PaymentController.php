@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use App\Models\Orders;
 use App\Models\OrderItems;
+use App\Models\Orders;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class PaymentController extends Controller
 {
+    private const SHIPPING_COST = 100;
+
     public function create()
     {
-        $cart = \Session::get('cart');
+        $cart = Session::get('cart');
 
         if (!$cart || count($cart) == 0) {
             return redirect()->route('cart-show')
@@ -24,10 +28,14 @@ class PaymentController extends Controller
             $total += $producte->price * $producte->quantity;
         }
 
-        $enviament = 100;
-        $total += $enviament;
+        $total += self::SHIPPING_COST;
 
         $token = $this->getAccessToken();
+
+        if (!$token) {
+            return redirect()->route('cart-show')
+                ->with('error', 'No s\'ha pogut connectar amb PayPal.');
+        }
 
         $response = Http::withToken($token)
             ->post('https://api-m.sandbox.paypal.com/v2/checkout/orders', [
@@ -46,14 +54,19 @@ class PaymentController extends Controller
 
         $order = $response->json();
 
+        if (!$response->successful() || !isset($order['links'])) {
+            return redirect()->route('cart-show')
+                ->with('error', 'No s\'ha pogut crear la comanda en PayPal.');
+        }
+
         foreach ($order['links'] as $link) {
             if ($link['rel'] === 'approve') {
                 return redirect()->away($link['href']);
             }
         }
 
-        return redirect()->route('home')
-            ->with('error', 'No s\'ha pogut crear la comanda.');
+        return redirect()->route('cart-show')
+            ->with('error', 'No s\'ha pogut obtindre l\'enllaç de pagament.');
     }
 
     public function status(Request $request)
@@ -61,16 +74,21 @@ class PaymentController extends Controller
         $token = $this->getAccessToken();
         $orderId = $request->get('token');
 
+        if (!$token || !$orderId) {
+            return redirect()->route('cart-show')
+                ->with('error', 'No s\'ha pogut confirmar el pagament.');
+        }
+
         $response = Http::withToken($token)
             ->withBody('{}', 'application/json')
             ->post("https://api-m.sandbox.paypal.com/v2/checkout/orders/{$orderId}/capture");
 
         $result = $response->json();
 
-        if (isset($result['status']) && $result['status'] === 'COMPLETED') {
-            $this->saveOrder(\Session::get('cart'));
+        if ($response->successful() && isset($result['status']) && $result['status'] === 'COMPLETED') {
+            $this->saveOrder(Session::get('cart'));
 
-            \Session::forget('cart');
+            Session::forget('cart');
 
             return redirect()->route('cart-show')
                 ->with('message', 'Pagament realitzat correctament amb PayPal.');
@@ -88,20 +106,20 @@ class PaymentController extends Controller
             $subtotal += $item->price * $item->quantity;
         }
 
-        $order = Orders::where('user_id', \Auth::user()->id)
+        $order = Orders::where('user_id', Auth::user()->id)
             ->where('status', 'cart')
             ->first();
 
         if (!$order) {
             $order = Orders::create([
                 'subtotal' => $subtotal,
-                'shipping' => 100,
-                'user_id' => \Auth::user()->id,
+                'shipping' => self::SHIPPING_COST,
+                'user_id' => Auth::user()->id,
                 'status' => 'paid'
             ]);
         } else {
             $order->subtotal = $subtotal;
-            $order->shipping = 100;
+            $order->shipping = self::SHIPPING_COST;
             $order->status = 'paid';
             $order->save();
         }
@@ -132,6 +150,10 @@ class PaymentController extends Controller
             'grant_type' => 'client_credentials'
         ]);
 
-        return $response->json()['access_token'];
+        if (!$response->successful()) {
+            return null;
+        }
+
+        return $response->json()['access_token'] ?? null;
     }
 }
