@@ -52,7 +52,7 @@ class OrderController extends Controller
      */
     public function show(Orders $order)
 {
-        // Cargamos la relación de ítems y los productos dentro de esos ítems
+        // Carreguem la relació d'ítems i els productes dins d'eixos ítems
         $order->load('order_items.product');
 
         return view('admin.order.show', compact('order'));

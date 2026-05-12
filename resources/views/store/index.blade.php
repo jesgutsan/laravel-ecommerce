@@ -79,6 +79,7 @@
                 ])]
             };
         },
+
         methods: {
             matchProduct(name, category) {
                 const matchesSearch = name.toLowerCase().includes(this.search.toLowerCase());

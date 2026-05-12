@@ -39,8 +39,8 @@ return new class extends Migration
     {
 
     Schema::table('order_items', function (Blueprint $table) {
-        $table->dropForeign(['product_id']); // Eliminar la clave foránea
-        $table->dropForeign(['order_id']);   // Si también hay una clave foránea a 'orders'
+        $table->dropForeign(['product_id']); // Eliminar la clau forana
+        $table->dropForeign(['order_id']);   // Si també hi ha una clau forana a orders
     });
 
         Schema::dropIfExists('order_items');

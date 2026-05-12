@@ -3,38 +3,18 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-// use Illuminate\Support\Facades\Session;
-use Illuminate\Http\Request;
 use App\Models\Orders;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
     protected $redirectTo = '/';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
@@ -43,17 +23,17 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        $cart = \Session::get('cart');
+        $cart = Session::get('cart');
 
         $order = Orders::firstOrCreate(
-            ['user_id' => auth()->id(), 'status' => 'cart'],
+            ['user_id' => Auth::id(), 'status' => 'cart'],
             ['subtotal' => 0, 'shipping' => 0]
         );
 
-        // Borramos primero los productos antiguos del carrito en BD
+        // Esborrem primer els productes antics del carret en BD
         $order->order_items()->delete();
 
-        // Si todavía hay productos en sesión, los volvemos a guardar
+        // Si encara hi ha productes en sessió, els tornem a guardar
         if ($cart && count($cart) > 0) {
             foreach ($cart as $item) {
                 $order->order_items()->create([
@@ -67,7 +47,6 @@ class LoginController extends Controller
         $this->guard()->logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
         return redirect('/');
@@ -76,8 +55,8 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         $order = Orders::where('user_id', $user->id)
-                    ->where('status', 'cart')
-                    ->first();
+            ->where('status', 'cart')
+            ->first();
 
         if ($order) {
             $cart = [];
@@ -88,8 +67,8 @@ class LoginController extends Controller
                 $cart[$product->slug] = $product;
             }
 
-            if (!\Session::has('cart') || count(\Session::get('cart')) == 0) {
-                \Session::put('cart', $cart);
+            if (!Session::has('cart') || count(Session::get('cart')) == 0) {
+                Session::put('cart', $cart);
             }
         }
     }

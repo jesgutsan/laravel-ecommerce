@@ -10,7 +10,7 @@
       Treballe amb productes de qualitat i atenció personalitzada.
     </p>
 
-    <!-- REDES SOCIALES -->
+    <!-- XARXES SOCIALS -->
     <div class="text-center mt-4">
       <h3>Segueix-nos</h3>
 
