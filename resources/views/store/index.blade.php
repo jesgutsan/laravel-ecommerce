@@ -72,11 +72,7 @@
             return {
                 search: '',
                 selectedCategory: '',
-                categories: [...new Set([
-                    @foreach ($products as $product)
-                        '{{ $product->category->name }}',
-                    @endforeach
-                ])]
+                categories: @json($categories)
             };
         },
 

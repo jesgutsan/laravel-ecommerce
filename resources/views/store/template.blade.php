@@ -11,8 +11,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     @if(app()->environment('production'))
         <link rel="stylesheet" href="{{ secure_asset('css/main.css') }}">
+        <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     @else
         <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     @endif
 </head>
 
@@ -23,7 +25,7 @@
     @include('store.partials.message')
     @include('store.partials.nav')
 
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
     <main>
     @yield('content')
     </main>

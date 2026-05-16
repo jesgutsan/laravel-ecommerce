@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Product;
+use App\Models\Category;
 
 class StoreController extends Controller
 {
     public function index()
     {
         $products = Product::where('visible', 1)->get();
-
-        return view('store.index', compact('products'));
+        $categories = Category::pluck('name');
+        return view('store.index', compact('products', 'categories'));
     }
 
     public function show($slug)
