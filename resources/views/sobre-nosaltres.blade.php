@@ -7,7 +7,6 @@
 
     <p>
       Aquesta és la meua botiga online.
-      Treballe amb productes de qualitat i atenció personalitzada.
     </p>
 
     <!-- XARXES SOCIALS -->
